@@ -34,7 +34,7 @@ public class CompanyController {
     //update
     @PutMapping("/{id}")
     public ResponseEntity<CompanyResponseDTO> updateCompany(@PathVariable Long id,
-                                                    @RequestBody Company company) {
+                                                            @RequestBody Company company) {
         CompanyResponseDTO updatedCompany = companyService.updateCompany(id, company);
 
         if (updatedCompany == null) {
@@ -47,8 +47,10 @@ public class CompanyController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCompany(@PathVariable Long id) {
 
-        companyService.deleteCompany(id);
-
-        return ResponseEntity.ok("Company deleted successfully");
+        if (id != null) {
+            companyService.deleteCompany(id);
+            return ResponseEntity.ok("Company deleted successfully");
+        }
+        return  ResponseEntity.notFound().build();
     }
 }
